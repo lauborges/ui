@@ -49,10 +49,12 @@ class DropDownMenu extends Component {
      */
     visibleOptions: React.PropTypes.number,
     style: React.PropTypes.object,
+    autoSelectable: React.PropTypes.bool
   }
 
   static defaultProps = {
     visibleOptions: 8,
+    autoSelectable: false
   }
 
   constructor(props) {
@@ -70,7 +72,8 @@ class DropDownMenu extends Component {
   }
 
   componentWillMount() {
-    this.autoSelect(this.props.options);
+    if(this.props.autoSelectable)
+      this.autoSelect(this.props.options);
     this.scrollDriver = new ScrollDriver();
     this.timingDriver = new TimingDriver();
   }
@@ -83,7 +86,8 @@ class DropDownMenu extends Component {
     } else if (!selectedOption || nextProps.options !== this.props.options) {
       // Automatically select the first option if there is no selected option
       // or when options change
-      this.autoSelect(nextProps.options);
+      if(this.props.autoSelectable)
+        this.autoSelect(nextProps.options);
     }
   }
 
